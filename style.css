@@ -196,8 +196,8 @@ body{
 .ig-card{ background:transparent; border:1px solid var(--border-amb); padding:.55rem .6rem;
   text-align:left; font-family:inherit; cursor:pointer; transition:all .18s; }
 .ig-card:hover{ border-color:var(--amber-glow); background:rgba(46,37,26,.45); }
-.ig-cl{ color:var(--text); font-size:.8rem; line-height:1.4; word-break:keep-all; }
-.ig-cs{ color:var(--text-dim); font-size:.62rem; letter-spacing:.03em; margin-top:.2rem; }
+.ig-cl{ color:var(--cream); font-size:.9rem; line-height:1.45; word-break:keep-all; }
+.ig-cs{ color:var(--cream-dim); font-size:.72rem; letter-spacing:.03em; margin-top:.24rem; }
 .ig-card.key{ border-color:var(--amber-glow); }                    /* 해금된 결정타 */
 .ig-card.used, .ig-card.locked{ cursor:default; opacity:.42; }
 .ig-card.locked{ border-style:dashed; }
@@ -406,7 +406,8 @@ body{
 
 /* ════════ ACT END CARD ════════ */
 #act-card{ position:absolute; inset:0; z-index:70; display:none;
-  background:var(--bg); flex-direction:column; align-items:center; justify-content:center; gap:1.4rem; padding:2rem; }
+  background:var(--bg); flex-direction:column; align-items:center; justify-content:safe center;
+  gap:1.4rem; padding:2rem 1.4rem; overflow-y:auto; }   /* safe center + 스크롤: 작은 화면에서 잘림 방지 */
 #act-card.show{ display:flex; animation:fadein .6s ease; }
 .act-card-label{ color:var(--text-dim); letter-spacing:.4em; font-size:.8rem; text-transform:uppercase; }
 .act-card-title{ color:var(--amber-glow); font-size:clamp(1.6rem,4vw,2.4rem); letter-spacing:.1em; }
@@ -455,7 +456,7 @@ body{
 .cb-is{ color:var(--text-dim); font-size:.62rem; letter-spacing:.04em; margin-top:.25rem; }
 
 /* 결과 */
-.cb-result{ display:none; margin-top:1rem; padding:.9rem 1rem; border-left:2px solid var(--text-dim);
+.cb-result{ display:none; margin:.9rem 0 1rem; padding:.9rem 1rem; border-left:2px solid var(--text-dim);
   background:rgba(158,136,111,.06); }
 .cb-result.show{ display:block; animation:fadein .4s ease; }
 .cb-result.ok{ border-left-color:var(--amber-glow); }
