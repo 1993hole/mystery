@@ -2,7 +2,7 @@
    대사·데이터 수정은 이 파일을 직접 편집하세요. */
 window.DATA_CLUES = {
   "ritual_dagger":      { "title": "의식 단검",        "img": "assets/clues/clue_ritual_dagger.png",      "desc": "손잡이에 낯선 문양이 새겨진 가늘고 긴 단검. 의식용 도구처럼 다듬어져 있다. 일반적인 흉기가 아니다." },
-  "body_arrangement":   { "title": "시신 배치",        "img": null,                                        "desc": "복부 위로 두 손등이 마주하고, 다리는 가지런히 모인 자세. 누군가 일부러 잡아둔 듯한 배치다. 단순한 살인이 아니다." },
+  "body_arrangement":   { "title": "시신 배치",        "img": "assets/clues/char_edmund_corpse.png",       "desc": "복부 위로 두 손등이 마주하고, 다리는 가지런히 모인 자세. 누군가 일부러 잡아둔 듯한 배치다. 단순한 살인이 아니다." },
   "folded_note":        { "title": "현장 쪽지",        "img": "assets/clues/clue_folded_note.png",         "desc": "“오늘 밤이 끝나기 전에 모든 게 제자리를 찾을 겁니다.”\n빠르게 흘려 썼지만 일정한 리듬이 있는 필체. 같은 필체가 다시 나타나면 범인과 연결된다." },
   "invitation_envelope":{ "title": "초대장 봉투",      "img": "assets/clues/clue_invitation_envelope.png", "desc": "“베라 애쉬모어 귀하”. 빠르게 흘려 썼지만 일정한 리듬이 있는 필체 — 현장 쪽지와 어딘가 닮았다." },
   "occult_book":        { "title": "의식 서적",        "img": "assets/clues/clue_occult_book.png",         "desc": "가죽 표지의 낡은 책. 손등을 마주보며 누운 사람의 그림과 빼곡한 절차. 살해 현장의 자세와 똑같다." },

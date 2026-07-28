@@ -101,7 +101,8 @@ body{
 .ic-btn.hidden{ display:none; }                       /* 활성화 전엔 공간도 차지하지 않음 → ACT 핍이 맨 끝 */
 .ic-btn.revealed{ display:inline-block; animation:fadein .6s ease; }
 .ic-btn.ic-icon{ font-size:1rem; padding:0; line-height:1; width:1.85rem; height:1.85rem;
-  display:inline-flex; align-items:center; justify-content:center; box-sizing:border-box; }   /* ⚙ 정사각형 아이콘 버튼(추후 SVG 교체) */
+  display:inline-flex; align-items:center; justify-content:center; box-sizing:border-box; }   /* 정사각형 아이콘 버튼 */
+.ic-svg{ width:1.05rem; height:1.05rem; display:block; }   /* 설정 아이콘 — fill:currentColor로 버튼 색 추종 */
 
 /* 목표바 (반투명) */
 #goal-bar{

@@ -217,12 +217,14 @@ function checkTriggers(){
   return false;
 }
 function show(id){ document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id===id)); }
-function setBg(el, key){ if(key) el.style.backgroundImage = `url('assets/backgrounds/bg_${key}.png')`; }
+/* 배경 URL — 보통은 bg_<key>.png. "raw:파일명"이면 접두사 없이 그 파일 직접(시신 컷 등 예외 이미지용) */
+function bgUrl(key){ return key.startsWith('raw:') ? `url('assets/backgrounds/${key.slice(4)}.png')` : `url('assets/backgrounds/bg_${key}.png')`; }
+function setBg(el, key){ if(key) el.style.backgroundImage = bgUrl(key); }
 /* 씬 배경 — 바뀔 때 페이드(아웃→교체→인) */
 let _bgTimer = null;
 function setSceneBg(key){
   if(!key) return;
-  const el=$('#scene-bg'), url=`url('assets/backgrounds/bg_${key}.png')`;
+  const el=$('#scene-bg'), url=bgUrl(key);
   if(el.style.backgroundImage===url) return;
   clearTimeout(_bgTimer);
   el.style.opacity='0';
@@ -233,10 +235,11 @@ function setSceneBgInstant(key){
   if(!key) return;
   clearTimeout(_bgTimer);
   const el=$('#scene-bg');
-  el.style.backgroundImage=`url('assets/backgrounds/bg_${key}.png')`;
+  el.style.backgroundImage=bgUrl(key);
   el.style.opacity='1';
 }
-function updateLocation(key){ const el=$('#tb-loc'); if(el) el.textContent = PLACES[key] || (ACT && ACT.hub && ACT.hub.title) || ''; }
+function updateLocation(key){ if(key && key.startsWith('raw:')) return;   // 예외 이미지(시신 컷)는 장소 라벨 유지
+  const el=$('#tb-loc'); if(el) el.textContent = PLACES[key] || (ACT && ACT.hub && ACT.hub.title) || ''; }
 function setActPips(actId){ const n={act1:1,act2:2,act3:3}[actId]||1; [1,2,3].forEach(i=>$('#pip'+i).classList.toggle('on', i===n)); }
 function revealUI(){ ['btn-notes','btn-inv'].forEach(id=>{ const e=$('#'+id); e.classList.remove('hidden'); e.classList.add('revealed'); }); }
 function hideUI(){ ['btn-notes','btn-inv'].forEach(id=>{ const e=$('#'+id); e.classList.add('hidden'); e.classList.remove('revealed'); }); }
