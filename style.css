@@ -102,7 +102,7 @@ body{
 .ic-btn.revealed{ display:inline-block; animation:fadein .6s ease; }
 .ic-btn.ic-icon{ font-size:1rem; padding:0; line-height:1; width:1.85rem; height:1.85rem;
   display:inline-flex; align-items:center; justify-content:center; box-sizing:border-box; }   /* 정사각형 아이콘 버튼 */
-.ic-svg{ width:1.05rem; height:1.05rem; display:block; }   /* 설정 아이콘 — fill:currentColor로 버튼 색 추종 */
+.ic-svg{ width:.85rem; height:.85rem; display:block; }   /* 설정 아이콘 — fill:currentColor로 버튼 색 추종, 테두리 안 여백 확보 */
 
 /* 목표바 (반투명) */
 #goal-bar{
