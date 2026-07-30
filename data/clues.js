@@ -11,6 +11,5 @@ window.DATA_CLUES = {
   "alex_letter":        { "title": "알렉스의 편지",    "img": "assets/clues/clue_alex_letter.png",         "desc": "“일이 정리되면 갈게. 함께 떠나자. 사랑해.” — Alex Grey. 날짜는 10년 전 오늘, 10월 31일." },
   "agreement_document": { "title": "공범 합의서",      "img": "assets/clues/clue_agreement_document.png",  "desc": "‘봉헌에 관한 침묵 합의서.’ Edmund Blackwood / Vera Ashmore. 10년 전 10월 31일.\n‘본 의식의 결과에 관해, 양자는 어떤 형태로도 언급하지 않는다.’ 두 사람이 함께 묻은 일이 있다." },
   "wine_glass":         { "title": "와인잔",           "img": "assets/clues/clue_wine_glass.png",          "desc": "기울어진 와인잔과, 다른 한 잔의 가장자리에 또렷한 립스틱 자국. 올리는 직전까지 누군가와 함께 있었다." },
-  "white_flower":       { "title": "흰 꽃",            "img": "assets/clues/clue_white_flower.png",        "desc": "" },
   "iris_photograph":    { "title": "아이리스 사진",    "img": "assets/clues/clue_iris_photograph.png",     "desc": "불이 꺼지기 직전, 복도로 향하는 한 사람의 뒷모습. 단정한 집사 업무복, 손에는 가늘고 긴 칼날. 더는 의심할 여지가 없다." }
 };

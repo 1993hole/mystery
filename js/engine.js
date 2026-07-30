@@ -697,7 +697,7 @@ function showEnding(e){
   $('#act-card-msg').textContent   = e.sub || '';
   rc.innerHTML = '<div class="recap-hd">이 결말을 만든 선택들</div>'
     + buildRecap().map(t=>`<div class="recap-row">· ${esc(t)}</div>`).join('')
-    + `<div class="recap-stat">수집한 단서 ${S.clues.length}개</div>`;   /* 분모 미표기: 미사용 단서(white_flower 등)가 섞여 오해를 부름 */
+    + `<div class="recap-stat">수집한 단서 ${S.clues.length}개</div>`;   /* 분모 미표기: 플레이 경로마다 총 획득 수가 달라 오해를 부름 */
   rc.classList.add('show');
   btn.textContent = '처음부터 다시';
   btn.onclick = ()=> toTitleUnderCover(card, rc);   // 카드로 덮은 채 전환 → 배경 잔상 방지
@@ -739,6 +739,7 @@ document.addEventListener('click', e=>{
 
 $('#btn-start').addEventListener('click', ()=> show('sc-prologue'));        // 타이틀 → 초대장
 $('#btn-title-load').addEventListener('click', loadGame);                   // 타이틀 → 불러오기
+$('#btn-title-settings').addEventListener('click', ()=>{ syncSpeedSeg(); $('#settings').classList.add('show'); });   // 타이틀 → 설정(인게임 패널 재사용)
 $('#btn-accept').addEventListener('click', ()=> show('sc-name'));           // 응한다 → 이름
 $('#btn-decline').addEventListener('click', ()=> show('sc-title'));         // 거절 → 타이틀
 $('#btn-enter').addEventListener('click', startGame);                       // 저택에 들어간다
@@ -763,8 +764,21 @@ $('#sys-sound').addEventListener('click', ()=>{          // 사운드 ON/OFF (�
   const el=$('#sound-state'); el.textContent = S.soundOn ? 'ON' : 'OFF'; el.classList.toggle('off', !S.soundOn);
 });
 
-/* 설정 (텍스트 속도 · 글자 크기) */
+/* 설정 (텍스트 속도 · 글자 크기 · 저장 초기화) */
 $('#sys-settings').addEventListener('click', ()=>{ closeMenu(); $('#settings').classList.add('show'); });
+/* 저장 기록 전체 삭제 — 2탭 확인(실수 방지), 3초 뒤 자동 해제 */
+$('#set-clear').addEventListener('click', ()=>{
+  const b=$('#set-clear');
+  if(b.classList.contains('armed')){
+    try{ localStorage.removeItem(SAVES_KEY); }catch(e){}
+    refreshLoadButtons(); renderSlots && (document.getElementById('saveload').classList.contains('show') && renderSlots());
+    b.classList.remove('armed'); b.textContent='삭제되었습니다';
+    clearTimeout(b._t); b._t=setTimeout(()=>{ b.textContent='전체 삭제'; }, 1600);
+  } else {
+    b.classList.add('armed'); b.textContent='한 번 더 누르면 삭제';
+    clearTimeout(b._t); b._t=setTimeout(()=>{ b.classList.remove('armed'); b.textContent='전체 삭제'; }, 3000);
+  }
+});
 $('#set-close').addEventListener('click', ()=> $('#settings').classList.remove('show'));
 $('#settings').addEventListener('click', e=>{ if(e.target.id==='settings') $('#settings').classList.remove('show'); });
 $('#seg-speed').addEventListener('click', e=>{ const b=e.target.closest('button[data-speed]'); if(!b) return;

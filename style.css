@@ -400,6 +400,12 @@ body{
   font-family:inherit; font-size:.72rem; letter-spacing:.04em; padding:.5rem .2rem; cursor:pointer; transition:all .15s; }
 .seg button:hover{ color:var(--cream); }
 .seg button.on{ border-color:var(--amber-glow); color:var(--amber-glow); background:rgba(46,37,26,.4); }
+/* 저장 기록 초기화 — 가로 배치 + 2탭 확인식 삭제 버튼 */
+.set-row-data{ flex-direction:row; align-items:center; justify-content:space-between; }
+.set-clear{ background:transparent; border:1px solid rgba(122,28,28,.6); color:#c98a7a;
+  font-family:inherit; font-size:.72rem; letter-spacing:.04em; padding:.45rem 1rem; cursor:pointer; transition:all .15s; }
+.set-clear:hover{ border-color:#c98a7a; background:rgba(122,28,28,.16); }
+.set-clear.armed{ color:#e0a595; border-color:#c98a7a; background:rgba(122,28,28,.22); }
 
 /* 글자 크기 — 대화창 본문 스케일 */
 #game.fs-sm .dlg-text{ font-size:clamp(.86rem,1.3vw,.96rem); }
