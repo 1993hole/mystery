@@ -10,7 +10,7 @@ window.DATA_ACT3 = {
 
     /* ── SCENE01 — 올리의 시신 앞, 집무실 개방 ── */
     "intro": { "beats":[
-      { "bg":"bar_corner_inner_night", "bgm":"act3_intro", "se":"quiet" },
+      { "bg":"bar_corner_inner_night", "bgm":"07_Act3_party", "se":"quiet" },
       { "text":"올리의 시신 앞에 모두가 굳어 있다." },
       { "who":"silas", "emote":"tense", "text":"…일단 시신을 옮겨야 할 것 같습니다." },
       { "who":"lucian", "text":"(잠시 생각하더니) …아닙니다. 현장은 그대로 두는 게 좋겠습니다." },
@@ -31,7 +31,7 @@ window.DATA_ACT3 = {
 
     /* ── SCENE02 — 집무실: 공범 합의서 (알렉스 단계 2) ── */
     "office": { "beats":[
-      { "bg":"office_night", "bgm":"office_01", "se":"door" },
+      { "bg":"office_night", "se":"door" },
       { "text":"에드먼드의 집무실. 묵직한 마호가니 책상, 깊이 가라앉은 가죽 의자. 책상 위는 단정하게 정리되어 있다." },
       { "text":"책상 서랍을 살핀다. 가장 깊숙한 칸에 자물쇠가 걸려 있다." },
       { "text":"열쇠 꾸러미를 꺼내 본다. 그중 한 자루가 맞는다." },
@@ -51,9 +51,9 @@ window.DATA_ACT3 = {
 
     /* ── SCENE02B — 사색④: 단서 조합 (능동성 정점) ── */
     "reflect4": { "beats":[
-      { "bg":"corridor_night", "bgm":"reflection_act3" },
+      { "bg":"corridor_night" },
       { "text":"응접실로 향하기 전, 잠시 멈춰 선다." },
-      { "text":"수사 노트를 펼친다. 이번엔 단서들을 나란히 놓아본다." },
+      { "text":"수사 노트를 펼친다. 이번엔 단서들을 나란히 놓아본다.", "se":"notebook" },
       { "combine":{
         "title":"수사 노트 — 두 단서를 나란히 놓는다",
         "closeLabel":"수사 노트를 덮는다",
@@ -147,7 +147,7 @@ window.DATA_ACT3 = {
 
     /* ── SCENE03 — 응접실: 베라·사일러스 추궁 ── */
     "parlor": { "beats":[
-      { "bg":"parlor_night", "bgm":"confession_01", "se":"clock" },
+      { "bg":"parlor_night", "se":"clock" },
       { "text":"응접실에 들어선다. 베라와 사일러스가 마주 앉아 있다." },
       { "text":"베라는 빈 잔을 손가락 끝으로 가볍게 돌리고 있고, 사일러스는 다리를 꼰 채 천천히 와인을 들이킨다." },
       { "who":"vera", "emote":"smile", "text":"어머. 뭔가 좀 알아내셨나요?" },
@@ -201,7 +201,7 @@ window.DATA_ACT3 = {
 
           { "id":"final_blow", "label":"결정타 — 그 청년과 당신의 관계", "sub":"지금이라면, 물을 수 있다",
             "lockedSub":"아직 이르다 — 먼저 세 가지를 내밀어야 한다", "lockRounds":3, "beats":[
-            { "who":"player", "text":"…그 청년이, 베라 씨와 어떤 관계였나요." },
+            { "who":"player", "text":"…그 청년이, 베라 씨와 어떤 관계였나요.", "bgm":"08_Act3_confession", "seStop":"clock" },
             { "text":"베라의 어깨가 굳는다. 평소의 사교적 미소가, 처음으로 자리를 잃는다." },
             { "who":"vera", "emote":"tense", "text":"…모르겠네요. 무슨 말씀이신지." },
             { "who":"player", "text":"사람이 죽었어요. 농담하는 것 아닙니다." },
@@ -279,7 +279,7 @@ window.DATA_ACT3 = {
 
     /* ── SCENE04 — 아이리스의 사진 (그 순간) ── */
     "iris": { "beats":[
-      { "bg":"ballroom_entrance_night", "bgm":"iris_01" },
+      { "bg":"ballroom_entrance_night", "bgm":"07_Act3_party" },
       { "text":"아이리스가 카메라 뒤에서 작업을 마치고 있다. 디스플레이의 푸른 빛이 그녀의 얼굴을 비춘다." },
       { "who":"iris", "text":"정리됐어요. 보시겠어요?" },
       { "text":"사진들을 하나씩 넘긴다. 단체 사진, 연설 장면, 박수. 그리고 한 장." },
@@ -298,8 +298,8 @@ window.DATA_ACT3 = {
 
     /* ── SCENE04B — 사색⑤: 마지막 정리 ── */
     "reflect5": { "beats":[
-      { "bg":"corridor_night", "bgm":"final_reflection" },
-      { "text":"연회장으로 향하는 복도. 잠시 멈춰 선다. 수사 노트를 마지막으로 펼친다." },
+      { "bg":"corridor_night" },
+      { "text":"연회장으로 향하는 복도. 잠시 멈춰 선다. 수사 노트를 마지막으로 펼친다.", "se":"notebook" },
       { "text":"현장의 단검과 자세. 쪽지와 봉투의 필체. 다락의 의식. 루시안의 방. 집무실의 합의서. 그리고 아이리스의 사진." },
       { "text":"…모든 단서가, 한 곳을 가리킨다. 같은 필체. 같은 단검. 같은 자세. 같은 사람." },
       { "text":"그리고 10년 전부터, 이 저택에 있던 사람." },
@@ -310,7 +310,7 @@ window.DATA_ACT3 = {
 
     /* ── SCENE05 — 연회장: 루시안과의 대면 (관계 분기) ── */
     "confront": { "beats":[
-      { "bg":"ballroom_full_night", "bgm":"final_confront" },
+      { "bg":"ballroom_full_night", "bgm":"09_Act3_final_choice" },
       { "text":"연회장에 루시안이 혼자 서 있다. 그가 천천히 돌아본다. 평소와 같은 단정한 얼굴." },
       { "who":"lucian", "emote":"smile", "text":"단서가 모이신 모양이군요." },
       { "who":"player", "text":"…루시안 씨." },
@@ -358,7 +358,7 @@ window.DATA_ACT3 = {
 
     /* ── SCENE07 — 최종 선택 → 누적 분기 평가 ── */
     "final": { "beats":[
-      { "bg":"ballroom_full_night", "bgm":"final_choice", "se":"clock_strike" },
+      { "bg":"ballroom_full_night", "se":"clock_strike" },
       { "text":"괘종시계가 정각을 친다. 할로윈 밤이 끝을 향한다. 모두의 시선이 나에게 모인다." },
       { "who":"player", "text":"(…결정해야 한다.)" },
       { "quest":{ "action":"complete", "id":"M3-2", "label":"범인을 지목하라" } },
@@ -371,7 +371,7 @@ window.DATA_ACT3 = {
 
     /* ════════════ E-01 트루 엔딩 — 아이러니 ════════════ */
     "end_true": { "beats":[
-      { "bg":"ballroom_full_night", "bgm":"ending_true" },
+      { "bg":"ballroom_full_night", "bgm":"10_Ending_true+subB" },
       { "who":"player", "text":"…루시안 씨를 고발하겠습니다." },
       { "who":"player", "text":"에드먼드 씨가 알렉스 씨에게 한 일도, 함께요. 전부 다." },
       { "who":"marian", "text":"…알겠습니다." },
@@ -399,7 +399,7 @@ window.DATA_ACT3 = {
 
     /* ════════════ E-02 서브 엔딩 A — 허탈함 ════════════ */
     "end_subA": { "beats":[
-      { "bg":"ballroom_full_night", "bgm":"ending_subA" },
+      { "bg":"ballroom_full_night", "bgm":"11_Ending_SubACD" },
       { "who":"player", "text":"…루시안 씨를 고발하겠습니다." },
       { "who":"marian", "text":"알겠습니다." },
       { "text":"루시안은 가볍게 고개를 숙인다. 그 뒤에서, 무엇인가 빠진 듯한 공기가 흐른다." },
@@ -414,7 +414,7 @@ window.DATA_ACT3 = {
 
     /* ════════════ E-03 서브 엔딩 B — 공모 ════════════ */
     "end_subB": { "beats":[
-      { "bg":"ballroom_full_night", "bgm":"ending_subB" },
+      { "bg":"ballroom_full_night", "bgm":"10_Ending_true+subB" },
       { "who":"player", "text":"…아무 일도 없었어요. 모두 사일러스 씨의 진술대로요." },
       { "text":"사신 코스튬의 눈썹이 살짝 올라간다. 하지만 그녀는 더 묻지 않는다." },
       { "who":"marian", "text":"…그렇게 적겠습니다." },
@@ -433,7 +433,7 @@ window.DATA_ACT3 = {
 
     /* ════════════ E-04 서브 엔딩 C — 반전의 피해자 ════════════ */
     "end_subC": { "beats":[
-      { "bg":"ballroom_full_night", "bgm":"ending_subC" },
+      { "bg":"ballroom_full_night", "bgm":"11_Ending_SubACD" },
       { "who":"player", "text":"…진실을 말씀드리겠습니다." },
       { "who":"player", "text":"…베라 씨예요. 그녀가 에드먼드 씨를 죽였습니다." },
       { "text":"단서가 모자란 채로 내린 결론. 연회장 안의 공기가 멈춘다." },
@@ -456,7 +456,7 @@ window.DATA_ACT3 = {
 
     /* ════════════ E-05 서브 엔딩 D — 불안한 미완성 ════════════ */
     "end_subD": { "beats":[
-      { "bg":"ballroom_full_night", "bgm":"ending_subD" },
+      { "bg":"ballroom_full_night", "bgm":"11_Ending_SubACD" },
       { "who":"player", "text":"…모르겠어요. 누구도 확신할 수 없어요." },
       { "text":"사신 코스튬은 아무 말도 하지 않는다. 녹음기의 빨간 불빛만 깜빡인다." },
       { "who":"lucian", "text":"…네. 오늘 밤은, 그렇게 끝납니다." },

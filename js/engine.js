@@ -18,16 +18,116 @@ let _actx = null;
 function playClick(){
   if(!S.soundOn) return;                 // 사운드 OFF면 무음
   try{
-    if(!_actx) _actx = new (window.AudioContext || window.webkitAudioContext)();
-    if(_actx.state === 'suspended') _actx.resume();
-    const t = _actx.currentTime;
+    if(!ensureActx()) return;
+    const t = _actx.currentTime + 0.005;                    // 모바일: 스케줄 여유(첫 탭 씹힘 완화)
     const o = _actx.createOscillator(), g = _actx.createGain();
     o.type = 'sine'; o.frequency.setValueAtTime(600, t);
     g.gain.setValueAtTime(0.0001, t);
-    g.gain.exponentialRampToValueAtTime(0.10, t + 0.004);   // 빠른 어택
+    g.gain.exponentialRampToValueAtTime(0.12, t + 0.004);   // 빠른 어택(모바일용 소폭 상향)
     g.gain.exponentialRampToValueAtTime(0.0001, t + 0.07);  // 짧은 감쇠 → "톡"
     o.connect(g); g.connect(_actx.destination);
-    o.start(t); o.stop(t + 0.08);
+    o.start(t); o.stop(t + 0.085);
+  }catch(e){}
+}
+
+/* ── 오디오 컨텍스트 (클릭음·GainNode 공용) ── */
+function ensureActx(){
+  if(!_actx){ try{ _actx = new (window.AudioContext || window.webkitAudioContext)(); }catch(e){} }
+  if(_actx && _actx.state==='suspended') _actx.resume();
+  return _actx;
+}
+/* file://은 Web Audio가 로컬 파일을 무음 처리할 수 있어 직접 .volume 폴백, http(s)는 GainNode(iOS 볼륨 대응) */
+const _useGain = (location.protocol !== 'file:');
+
+/* ── BGM (HTML5 Audio · GainNode 크로스페이드 · file:// 폴백) ──
+   같은 트랙이면 재시작 안 하고 유지. "_fade"로 끝나는 마커는 페이드아웃. 볼륨은 GainNode(또는 폴백 .volume). */
+let _bgmA=null, _bgmB=null, _bgmActive=null, _bgmCur='', _bgmVol=0.6, _bgmFade=null;
+let _bgmGainA=null, _bgmGainB=null, _bgmGraph=false;
+function initBgm(){
+  _bgmA=new Audio(); _bgmB=new Audio();
+  [_bgmA,_bgmB].forEach(a=>{ a.loop=true; a.preload='auto'; a.volume=1; });
+}
+function setupBgmGraph(){                    // 최초 재생(제스처) 때 1회 그래프 구성
+  if(!_useGain || _bgmGraph) return;
+  const ctx=ensureActx(); if(!ctx) return;
+  try{
+    _bgmGainA=ctx.createGain(); _bgmGainB=ctx.createGain();
+    ctx.createMediaElementSource(_bgmA).connect(_bgmGainA); _bgmGainA.connect(ctx.destination);
+    ctx.createMediaElementSource(_bgmB).connect(_bgmGainB); _bgmGainB.connect(ctx.destination);
+    _bgmGainA.gain.value=0; _bgmGainB.gain.value=0; _bgmGraph=true;
+  }catch(e){ _bgmGainA=_bgmGainB=null; _bgmGraph=false; }   // 실패 시 .volume 폴백
+}
+function bgmGainOf(el){ return el===_bgmA?_bgmGainA:(el===_bgmB?_bgmGainB:null); }
+function setBgmLevel(el, lv){                // 레벨(0~1): GainNode 있으면 gain, 없으면 .volume
+  if(!el) return; const g=bgmGainOf(el);
+  if(g){ try{ g.gain.value=lv; }catch(e){} } else { try{ el.volume=lv; }catch(e){} }
+}
+function bgmSrc(track){ return 'assets/audio/bgm/'+encodeURIComponent(track)+'.mp3'; }  // '+' 등 안전 인코딩
+function playBgm(track){
+  if(!_bgmA) return;
+  if(track===_bgmCur) return;                       // 같은 트랙 → 유지(재시작 안 함)
+  setupBgmGraph();
+  _bgmCur=track;
+  const oldEl=_bgmActive, newEl=(oldEl===_bgmA)?_bgmB:_bgmA;
+  try{ newEl.src=bgmSrc(track); newEl.currentTime=0; }catch(e){}
+  setBgmLevel(newEl, 0);
+  if(S.soundOn) newEl.play().catch(()=>{});
+  _bgmActive=newEl;
+  crossfadeBgm(oldEl,newEl);
+}
+function crossfadeBgm(oldEl,newEl){
+  clearInterval(_bgmFade);
+  const dur=900, stepMs=40; let t=0;
+  _bgmFade=setInterval(()=>{
+    t+=stepMs; const r=Math.min(1,t/dur), vol=S.soundOn?_bgmVol:0;
+    setBgmLevel(newEl, vol*r);
+    if(oldEl&&oldEl!==newEl) setBgmLevel(oldEl, vol*(1-r));
+    if(r>=1){ clearInterval(_bgmFade); if(oldEl&&oldEl!==newEl) oldEl.pause(); }
+  }, stepMs);
+}
+function fadeOutBgm(){
+  clearInterval(_bgmFade); _bgmCur='';
+  const el=_bgmActive; if(!el){ return; }
+  const stepMs=40, dur=1000; let t=0;
+  _bgmFade=setInterval(()=>{ t+=stepMs; const r=Math.min(1,t/dur);
+    setBgmLevel(el, (S.soundOn?_bgmVol:0)*(1-r));
+    if(r>=1){ clearInterval(_bgmFade); el.pause(); } }, stepMs);
+}
+function stopBgm(){ clearInterval(_bgmFade); _bgmCur=''; [_bgmA,_bgmB].forEach(a=>{ if(a) a.pause(); }); setBgmLevel(_bgmA,0); setBgmLevel(_bgmB,0); _bgmActive=null; }
+function applyBgmMute(){                              // 사운드 ON/OFF 토글 반영
+  if(!_bgmActive) return;
+  if(S.soundOn){ setBgmLevel(_bgmActive, _bgmVol); if(_bgmActive.paused && _bgmCur) _bgmActive.play().catch(()=>{}); }
+  else { setBgmLevel(_bgmActive, 0); _bgmActive.pause(); }
+}
+function setBgmVol(v){ _bgmVol=Math.max(0,Math.min(1,v)); if(S.soundOn) setBgmLevel(_bgmActive, _bgmVol); }
+
+/* ── SFX (HTML5 Audio 원샷 · GainNode · file:// 폴백) ── */
+let _seVol=0.7, _seCache={}, _seGain=null, _seSourced={};
+function setupSeGain(){
+  if(!_useGain || _seGain) return;
+  const ctx=ensureActx(); if(!ctx) return;
+  try{ _seGain=ctx.createGain(); _seGain.gain.value=_seVol; _seGain.connect(ctx.destination); }catch(e){ _seGain=null; }
+}
+function playSe(name){
+  if(!S.soundOn || !name) return;
+  try{
+    setupSeGain();
+    let a=_seCache[name];
+    if(!a){ a=new Audio('assets/audio/sfx/'+encodeURIComponent(name)+'.mp3'); a.preload='auto'; _seCache[name]=a; }
+    if(_seGain && !_seSourced[name]){ try{ ensureActx().createMediaElementSource(a).connect(_seGain); _seSourced[name]=true; }catch(e){} }
+    if(!_seGain){ try{ a.volume=_seVol; }catch(e){} }   // 폴백만 .volume(GainNode면 gain이 제어)
+    try{ a.currentTime=0; }catch(e){}
+    a.play().catch(()=>{});           // 파일 없으면 조용히 무시(quiet·car_door 등)
+  }catch(e){}
+}
+function stopSe(name){ const a=_seCache[name]; if(a){ try{ a.pause(); a.currentTime=0; }catch(e){} } }   // 긴 SE(괘종 등) 중단
+function stopAllSe(){ for(const k in _seCache){ try{ _seCache[k].pause(); _seCache[k].currentTime=0; }catch(e){} } }   // 타이틀 복귀 시 잔여 SE 정지
+function setSeVol(v){ _seVol=Math.max(0,Math.min(1,v)); if(_seGain){ try{ _seGain.gain.value=_seVol; }catch(e){} } }
+function loadVolPrefs(){                     // 저장된 볼륨 복원(슬라이더·내부값)
+  try{
+    const b=localStorage.getItem('att_bgmvol'), s=localStorage.getItem('att_sevol');
+    if(b!==null){ _bgmVol=Math.max(0,Math.min(1,+b/100)); const el=$('#rng-bgm'); if(el) el.value=b; }
+    if(s!==null){ _seVol=Math.max(0,Math.min(1,+s/100)); const el=$('#rng-se');  if(el) el.value=s; }
   }catch(e){}
 }
 
@@ -186,6 +286,7 @@ function boot(){
     if(!CH || !CL || !ACT) throw new Error('데이터 스크립트가 로드되지 않았습니다 (data/*.js 확인).');
     $('#loading').style.display = 'none';
     refreshLoadButtons();
+    initBgm(); loadVolPrefs();
   }catch(e){
     $('#loading').textContent = '데이터 로드 실패: ' + e.message;
     console.error(e);
@@ -301,7 +402,10 @@ function step(){
     if('blackout' in b){ $('#blackout').classList.toggle('on', !!b.blackout); }
     if(b.set) Object.assign(S.flags, b.set);                         // 플래그 지정
     if(b.add) for(const k in b.add) S.flags[k]=(S.flags[k]||0)+b.add[k];  // 누적(가중치)
-    // bgm/se: 오디오 에셋 없음 — 무시 (추후 연결). tint/color: 사용 안 함(사용자가 배경 이미지에 직접)
+    if('bgm' in b){ if(/_fade$/.test(b.bgm)) fadeOutBgm(); else playBgm(b.bgm); }   // BGM 전환/페이드아웃
+    if(b.se) playSe(b.se);                                                          // 효과음 원샷
+    if(b.seStop) stopSe(b.seStop);                                                  // 긴 SE 중단(예: 째깍)
+    // tint/color: 사용 안 함(사용자가 배경 이미지에 직접)
 
     if(b.quest){ setGoal(b.quest); continue; }
     if(b.note){ addNote(b.note.title, b.note.body); continue; }
@@ -685,6 +789,7 @@ function buildRecap(){
    씬 크로스페이드(.45s)가 끝난 뒤 카드를 치워 직전 배경이 비치지 않게 한다. */
 function toTitleUnderCover(card, rc){
   show('sc-title');                                  // 카드 아래에서 전환 시작
+  fadeOutBgm(); stopAllSe();                          // 타이틀은 무음(BGM 페이드 + 잔여 SE 정지)
   $('#scene-bg').style.opacity='0';                  // 씬 배경도 즉시 죽여 이중 안전장치
   setTimeout(()=>{ card.classList.remove('show'); if(rc) rc.classList.remove('show'); }, 500);
 }
@@ -734,14 +839,22 @@ $('#tutorial').addEventListener('click', dismissTutorial);   // 튜토리얼 클
 
 /* 버튼류 클릭음 (선택지는 renderChoices에서 직접 처리) */
 document.addEventListener('click', e=>{
-  if(e.target.closest('.btn,.pro-btn,.name-ok,.hub-box,.ic-btn,.panel-close,.sys-item,.sys-close,.seg button,.sl-slot')) playClick();
+  if(e.target.closest('.btn,.pro-btn,.name-ok,.hub-box,.ic-btn,.panel-close,.sys-item,.sys-close,.seg button,.sl-slot,.sg-btn')) playClick();
 });
 
-$('#btn-start').addEventListener('click', ()=> show('sc-prologue'));        // 타이틀 → 초대장
+/* 사운드 상태 세팅(라벨·BGM 반영 공용) */
+function setSound(on){ S.soundOn=on; const el=$('#sound-state'); if(el){ el.textContent=on?'ON':'OFF'; el.classList.toggle('off', !on); } applyBgmMute(); }
+/* 사운드 게이트 통과 → 프롤로그 진입 (이 클릭이 오디오 잠금 해제 제스처) */
+function enterPrologue(){ $('#soundgate').classList.remove('show'); show('sc-prologue'); playBgm('01_main_ambient'); }
+
+$('#btn-start').addEventListener('click', ()=> $('#soundgate').classList.add('show'));   // 타이틀 → 사운드 안내
+$('#sg-on').addEventListener('click',  ()=>{ setSound(true);  enterPrologue(); });        // 소리와 함께 시작
+$('#sg-off').addEventListener('click', ()=>{ setSound(false); enterPrologue(); });        // 음소거로 시작
+$('#soundgate').addEventListener('click', e=>{ if(e.target.id==='soundgate'){ $('#soundgate').classList.remove('show'); show('sc-title'); } });  // 바깥 클릭 → 취소
 $('#btn-title-load').addEventListener('click', loadGame);                   // 타이틀 → 불러오기
 $('#btn-title-settings').addEventListener('click', ()=>{ syncSpeedSeg(); $('#settings').classList.add('show'); });   // 타이틀 → 설정(인게임 패널 재사용)
 $('#btn-accept').addEventListener('click', ()=> show('sc-name'));           // 응한다 → 이름
-$('#btn-decline').addEventListener('click', ()=> show('sc-title'));         // 거절 → 타이틀
+$('#btn-decline').addEventListener('click', ()=>{ show('sc-title'); fadeOutBgm(); stopAllSe(); });   // 거절 → 타이틀(무음)
 $('#btn-enter').addEventListener('click', startGame);                       // 저택에 들어간다
 $('#name-input').addEventListener('keydown', e=>{ if(e.key==='Enter') startGame(); });
 $('#name-input').addEventListener('input', ()=> $('#name-warn').classList.remove('show'));   // 입력 시작하면 경고 해제
@@ -753,16 +866,13 @@ document.querySelectorAll('.panel-close').forEach(b=> b.addEventListener('click'
 /* 시스템 메뉴 (사운드·저장·불러오기·설정 골격) */
 $('#btn-menu').addEventListener('click', openMenu);
 $('#sys-close').addEventListener('click', closeMenu);
-$('#sys-title').addEventListener('click', ()=>{ closeMenu(); show('sc-title'); });
+$('#sys-title').addEventListener('click', ()=>{ closeMenu(); show('sc-title'); fadeOutBgm(); stopAllSe(); });   // 메인으로 → 무음
 $('#sys-save').addEventListener('click', saveGame);
 $('#sys-load').addEventListener('click', ()=>{ if(!$('#sys-load').disabled) loadGame(); });
 $('#hub-menu').addEventListener('click', openMenu);                                   // 허브 우상단 ⚙
 $('#sl-close').addEventListener('click', closeSaveLoad);
 $('#saveload').addEventListener('click', e=>{ if(e.target.id==='saveload') closeSaveLoad(); });   // 바깥 클릭 닫기
-$('#sys-sound').addEventListener('click', ()=>{          // 사운드 ON/OFF (현재 클릭음, 추후 BGM·효과음도 제어)
-  S.soundOn = !S.soundOn;
-  const el=$('#sound-state'); el.textContent = S.soundOn ? 'ON' : 'OFF'; el.classList.toggle('off', !S.soundOn);
-});
+$('#sys-sound').addEventListener('click', ()=> setSound(!S.soundOn));    // 사운드 ON/OFF (클릭음 + BGM 제어)
 
 /* 설정 (텍스트 속도 · 글자 크기 · 저장 초기화) */
 $('#sys-settings').addEventListener('click', ()=>{ closeMenu(); $('#settings').classList.add('show'); });
@@ -789,5 +899,8 @@ $('#seg-font').addEventListener('click', e=>{ const b=e.target.closest('button[d
   if(b.dataset.font==='sm') g.classList.add('fs-sm'); else if(b.dataset.font==='lg') g.classList.add('fs-lg');
   [...$('#seg-font').children].forEach(x=>x.classList.toggle('on', x===b)); });
 $('#sysmenu').addEventListener('click', e=>{ if(e.target.id==='sysmenu') closeMenu(); });   // 바깥 클릭 시 닫기
+/* 볼륨 슬라이더 (BGM/SFX) — localStorage 저장 */
+$('#rng-bgm').addEventListener('input', e=>{ setBgmVol(+e.target.value/100); try{ localStorage.setItem('att_bgmvol', e.target.value); }catch(_){} });
+$('#rng-se').addEventListener('input',  e=>{ setSeVol(+e.target.value/100);  try{ localStorage.setItem('att_sevol',  e.target.value); }catch(_){} });
 
 boot();

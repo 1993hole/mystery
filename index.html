@@ -180,6 +180,19 @@
     <button class="btn" id="act-card-btn">계속</button>
   </div>
 
+  <!-- ════════ 사운드 안내 (시작하기 → 여기 → 프롤로그) ════════ -->
+  <div id="soundgate">
+    <div class="sg-card">
+      <div class="sg-title">사운드 안내</div>
+      <p class="sg-text">이 이야기에는 배경음악과 효과음이 함께합니다.<br>소리를 켜고 시작하시겠어요?</p>
+      <div class="sg-btns">
+        <button class="sg-btn yes" id="sg-on">소리와 함께 시작</button>
+        <button class="sg-btn" id="sg-off">음소거로 시작</button>
+      </div>
+      <div class="sg-note">설정에서 언제든 변경할 수 있습니다.</div>
+    </div>
+  </div>
+
   <!-- ════════ 시스템 메뉴 (사운드·저장·불러오기·설정 — 골격, 기능 추후) ════════ -->
   <div id="sysmenu">
     <div class="sysmenu-card">
@@ -222,6 +235,14 @@
           <button data-font="md" class="on">보통</button>
           <button data-font="lg">크게</button>
         </div>
+      </div>
+      <div class="set-row">
+        <div class="set-label">배경음악</div>
+        <input type="range" class="set-range" id="rng-bgm" min="0" max="100" value="60" aria-label="배경음악 볼륨">
+      </div>
+      <div class="set-row">
+        <div class="set-label">효과음</div>
+        <input type="range" class="set-range" id="rng-se" min="0" max="100" value="70" aria-label="효과음 볼륨">
       </div>
       <div class="set-row set-row-data">
         <div class="set-label">저장 기록</div>

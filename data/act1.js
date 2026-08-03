@@ -21,14 +21,14 @@ window.DATA_ACT1 = {
 
     "opening": {
       "beats": [
-        { "bg": "manor_exterior_night", "bgm": "ambient" },
+        { "bg": "manor_exterior_night", "bgm": "02_Act1_party" },
         { "text": "10월 31일, 밤." },
         { "text": "그레이번 저택이 언덕 위에서 빛을 내뿜고 있다." },
         { "text": "유리창 너머로 음악 소리가 흘러나온다." },
         { "text": "오늘 밤은 저택의 주인인 에드먼드 블랙우드가 할로윈 파티를 연 날이다." },
 
         { "bg": "manor_entrance_night" },
-        { "text": "문이 열리기도 전에, 먼저 말을 건네는 사람이 있다." },
+        { "text": "문이 열리기도 전에, 먼저 말을 건네는 사람이 있다.", "se": "footsteps_door" },
         { "who": "lucian", "text": "그레이번 저택에 오신 것을 환영합니다." },
         { "who": "lucian", "text": "저는 집사 루시안 보스입니다." },
         { "who": "player", "text": "안녕하세요." },
@@ -36,7 +36,7 @@ window.DATA_ACT1 = {
         { "who": "lucian", "text": "저택 위쪽은 파티 공간이 아니기 때문에, 그쪽으론 가지 않으시는 게 좋습니다." },
         { "who": "lucian", "text": "주인께서 곧 연설을 시작하실 겁니다. 연회장으로 안내해 드리죠." },
 
-        { "bg": "ballroom_full_night", "bgm": "party" },
+        { "bg": "ballroom_full_night" },
         { "text": "연회장은 호박과 촛불, 그리고 맛있는 음식들로 가득하다." },
         { "text": "할로윈 코스튬을 입은 손님들이 잔을 기울이며 대화를 나누는 모습이 보인다." },
         { "text": "그 중심에 저택의 주인인 에드먼드 블랙우드가 서 있다." },
@@ -44,7 +44,7 @@ window.DATA_ACT1 = {
         { "who": "edmund", "text": "할로윈은 경계가 사라지는 밤입니다." },
         { "who": "edmund", "text": "죽은 것과 산 것, 감춰진 것과 드러난 것. 오늘 밤만큼은, 모든 가면이 허락됩니다." },
         { "who": "edmund", "emote": "smile", "text": "모두 즐거운 시간이 되길 바랍니다." },
-        { "text": "박수가 터진다. 할로윈 파티에 어울리는 우아하고 분위기 있는 인사말이다." },
+        { "text": "박수가 터진다. 할로윈 파티에 어울리는 우아하고 분위기 있는 인사말이다.", "se": "applause" },
         { "quest": { "action": "start", "id": "M1-1", "label": "손님들과 인사를 나눠라" } },
         { "hub": true }
       ]
@@ -186,7 +186,7 @@ window.DATA_ACT1 = {
     "talk_tommy": {
       "beats": [
         { "bg": "bar_corner_night" },
-        { "who": "tommy", "text": "(술잔을 들며) 토미 펜이에요." },
+        { "who": "tommy", "text": "(술잔을 들며) 토미 펜이에요.", "se": "glass" },
         { "who": "player", "text": "안녕하세요. 이 파티는 어떻게 오셨어요?" },
         { "who": "tommy", "text": "그냥 아는 사람 따라왔어요." },
         { "who": "player", "text": "즐기고 계신 것 같진 않아 보이는데요." },
@@ -212,10 +212,10 @@ window.DATA_ACT1 = {
         { "text": "파티의 분위기는 무르익어가고, 모두가 대화의 꽃을 피우는 시간." },
         { "text": "순간, 불이 꺼진다." },
         { "blackout": true },
-        { "text": "무언가 땅에 떨어지는 둔탁한 소리…" },
+        { "text": "무언가 땅에 떨어지는 둔탁한 소리…", "se": "body_thud" },
         { "bg": "corridor_crime_scene_night_red" },
         { "blackout": false },
-        { "text": "불이 켜진다." },
+        { "text": "불이 켜진다.", "bgm": "03_Act1_investigation" },
         { "text": "에드먼드 블랙우드가 복도 끝에 쓰러져 있다." },
         { "text": "가슴 한가운데에는 낯선 문양이 새겨진 단검이 깊이 박혀 있다." },
         { "text": "복부 위로는 두 손등이 마주하고 있고, 다리는 가지런히 모여 있다. 우연히 쓰러진 자세가 아니다." },
@@ -252,13 +252,13 @@ window.DATA_ACT1 = {
         { "who": "lucian", "text": "발견된 순서 그대로 손대지 않았습니다." },
         { "who": "player", "text": "감사합니다." },
         { "text": "가슴에 박힌 단검을 자세히 본다." },
-        { "clue": "ritual_dagger" },
+        { "clue": "ritual_dagger", "se": "clue" },
         { "text": "다시 시신을 살핀다. 두 손등이 마주하고, 다리는 가지런히 모여 있다. 누군가 일부러 자세를 잡아둔 듯한 배치다." },
-        { "clue": "body_arrangement" },
+        { "clue": "body_arrangement", "se": "clue" },
         { "text": "그리고 에드먼드의 손 근처에 접힌 쪽지가 하나 있다. 펼쳐본다." },
         { "text": "“오늘 밤이 끝나기 전에 모든 게 제자리를 찾을 겁니다.”" },
         { "text": "빠르게 흘려 썼지만 일정한 리듬이 있는 필체다." },
-        { "clue": "folded_note" },
+        { "clue": "folded_note", "se": "clue" },
         { "quest": { "action": "complete", "id": "M1-2", "label": "현장을 조사하라" } },
         { "unlockUI": true },
         { "goto": "reflection" }
@@ -267,9 +267,9 @@ window.DATA_ACT1 = {
 
     "reflection": {
       "beats": [
-        { "bg": "ballroom_corner_night", "bgm": "reflection" },
+        { "bg": "ballroom_corner_night" },
         { "text": "소란이 가라앉고, 잠시 혼자 남는다." },
-        { "text": "수사 노트를 펼친다." },
+        { "text": "수사 노트를 펼친다.", "se": "notebook" },
         { "text": "…단서가 두 개. 단검의 문양은 본 적이 없다." },
         { "text": "자세는 일부러 잡아둔 것처럼 가지런했다." },
         { "text": "그리고 쪽지. “오늘 밤이 끝나기 전에 모든 게 제자리를 찾을 겁니다.”" },

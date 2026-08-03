@@ -356,6 +356,22 @@ body{
 /* 허브 우상단 메뉴 버튼 (허브엔 상단바가 없어 별도 배치) */
 .hub-menu{ position:absolute; top:.9rem; right:.9rem; z-index:5; color:var(--cream-dim); }
 
+/* ════════ 사운드 안내 게이트 ════════ */
+#soundgate{ position:absolute; inset:0; z-index:84; display:none;
+  background:rgba(4,3,2,.9); align-items:center; justify-content:center; padding:1.6rem; }
+#soundgate.show{ display:flex; animation:fadein .4s ease; }
+.sg-card{ width:min(90vw,340px); background:var(--bg2); border:1px solid var(--border-amb);
+  padding:1.8rem 1.5rem; text-align:center; box-shadow:0 14px 44px rgba(0,0,0,.6); }
+.sg-title{ color:var(--amber-glow); font-size:.95rem; letter-spacing:.16em; margin-bottom:.9rem; }
+.sg-text{ color:var(--cream-dim); font-size:.84rem; line-height:1.9; margin-bottom:1.4rem; }
+.sg-btns{ display:flex; flex-direction:column; gap:.5rem; }
+.sg-btn{ background:transparent; border:1px solid var(--border-amb); color:var(--cream);
+  font-family:inherit; font-size:.84rem; letter-spacing:.08em; padding:.75rem; cursor:pointer; transition:all .18s; }
+.sg-btn:hover{ border-color:var(--amber-glow); background:rgba(46,37,26,.45); }
+.sg-btn.yes{ border-color:var(--amber-glow); color:var(--amber-glow); }
+.sg-btn.yes:hover{ background:var(--amber-glow); color:var(--bg); }
+.sg-note{ color:var(--text-dim); font-size:.68rem; letter-spacing:.04em; margin-top:1rem; }
+
 /* ════════ 저장/불러오기 (6슬롯) ════════ */
 #saveload{ position:absolute; inset:0; z-index:82; display:none;
   background:rgba(0,0,0,.72); align-items:center; justify-content:center; padding:1.4rem; }
@@ -400,6 +416,13 @@ body{
   font-family:inherit; font-size:.72rem; letter-spacing:.04em; padding:.5rem .2rem; cursor:pointer; transition:all .15s; }
 .seg button:hover{ color:var(--cream); }
 .seg button.on{ border-color:var(--amber-glow); color:var(--amber-glow); background:rgba(46,37,26,.4); }
+/* 볼륨 슬라이더 */
+.set-range{ -webkit-appearance:none; appearance:none; width:100%; height:4px; border-radius:2px;
+  background:var(--border-amb); outline:none; cursor:pointer; }
+.set-range::-webkit-slider-thumb{ -webkit-appearance:none; appearance:none; width:15px; height:15px; border-radius:50%;
+  background:var(--amber-glow); border:1px solid var(--bg); cursor:pointer; }
+.set-range::-moz-range-thumb{ width:15px; height:15px; border-radius:50%; background:var(--amber-glow); border:1px solid var(--bg); cursor:pointer; }
+
 /* 저장 기록 초기화 — 가로 배치 + 2탭 확인식 삭제 버튼 */
 .set-row-data{ flex-direction:row; align-items:center; justify-content:space-between; }
 .set-clear{ background:transparent; border:1px solid rgba(122,28,28,.6); color:#c98a7a;

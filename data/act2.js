@@ -49,7 +49,7 @@ window.DATA_ACT2 = {
   "scenes": {
 
     "intro": { "beats":[
-      { "bg":"corridor_crime_scene_night", "bgm":"investigation_02" },
+      { "bg":"corridor_crime_scene_night", "bgm":"04_Act2_party" },
       { "text":"사람들의 말소리는 점점 작아지고, 복도는 무겁게 가라앉아 있다." },
       { "text":"에드먼드의 시신은 그대로, 옆에 루시안이 서 있다." },
       { "who":"player", "text":"루시안 씨, 조사를 도와주실 수 있나요?" },
@@ -157,7 +157,7 @@ window.DATA_ACT2 = {
 
     "talk_tommy": { "beats":[
       { "bg":"bar_corner_night" },
-      { "text":"토미가 같은 자리에서 술잔을 쥐고 있다. 아까보다 더 깊이 가라앉은 얼굴이다." },
+      { "text":"토미가 같은 자리에서 술잔을 쥐고 있다. 아까보다 더 깊이 가라앉은 얼굴이다.", "se":"glass" },
       { "who":"player", "text":"토미 씨, 잠깐 얘기 좀 할 수 있을까요." },
       { "who":"tommy", "emote":"tense", "text":"…지금은 좀 힘들 것 같네요." },
       { "choice":"", "options":[
@@ -212,7 +212,7 @@ window.DATA_ACT2 = {
     "key_ring": { "beats":[
       { "bg":"corridor_night" },
       { "text":"복도 끝, 청소함 위에 두툼한 열쇠 꾸러미가 놓여 있다." },
-      { "text":"손에 들어 본다. 묵직하다. 여러 종류의 열쇠가 한 고리에 매달려 있다." },
+      { "text":"손에 들어 본다. 묵직하다. 여러 종류의 열쇠가 한 고리에 매달려 있다.", "se":"keys" },
       { "text":"그중 하나, 크고 오래된 형태의 열쇠가 유난히 눈에 띈다." },
       { "clue":"key_ring", "se":"clue" },
       { "hub":true }
@@ -233,8 +233,8 @@ window.DATA_ACT2 = {
     ] },
 
     "reflect2": { "beats":[
-      { "bg":"ballroom_corner_night", "bgm":"reflection_02" },
-      { "text":"잠시 멈춰, 수사 노트를 다시 펼친다." },
+      { "bg":"ballroom_corner_night" },
+      { "text":"잠시 멈춰, 수사 노트를 다시 펼친다.", "se":"notebook" },
       { "text":"…뭔가, 마음에 걸리는 게 있다." },
       { "choice":"단서 중 무엇이 가장 신경 쓰이는가", "options":[
         { "label":"쪽지와 봉투, 두 글씨가 닮은 것 같아서", "then":[
@@ -254,7 +254,7 @@ window.DATA_ACT2 = {
     ] },
 
     "lucian_away": { "beats":[
-      { "bg":"ballroom_full_night", "bgm":"tension_02" },
+      { "bg":"ballroom_full_night" },
       { "text":"루시안이 곁으로 다가온다." },
       { "who":"lucian", "text":"알아보신 게 있나요?" },
       { "who":"player", "text":"단서를 좀 모았어요." },
@@ -271,7 +271,7 @@ window.DATA_ACT2 = {
     ] },
 
     "attic": { "beats":[
-      { "bg":"attic_night", "bgm":"attic_01" },
+      { "bg":"attic_night" },
       { "text":"다락의 문은 잠겨 있다. 아까 가져온 열쇠 꾸러미로 열 수 있을 것 같다." },
       { "choice":"", "options":[
         { "label":"문을 연다.", "then":[
@@ -285,9 +285,9 @@ window.DATA_ACT2 = {
               { "text":"그 순간, 드르륵─ 낡은 책장 뒤 무언가 움직이는 소리가 들린다." },
               { "choice":"", "options":[
                 { "label":"책장 뒤를 살펴본다. (조사)", "then":[
-                  { "text":"힘을 줘 책장을 밀어보니, 어떤 공간으로 통하는 문이 나 있다." },
-                  { "text":"공간으로 들어선다. 차가운 공기. 촛대와 닳아 짧아진 초. 누군가 이전에도 왔던 흔적이다." },
-                  { "bg":"attic_secret_night", "bgm":"horror_01" },
+                  { "text":"힘을 줘 책장을 밀어보니, 어떤 공간으로 통하는 문이 나 있다.", "se":"bookshelf" },
+                  { "text":"공간으로 들어선다. 차가운 공기. 촛대와 닳아 짧아진 초. 누군가 이전에도 왔던 흔적이다.", "bgm":"05_Act2_attic" },
+                  { "bg":"attic_secret_night" },
                   { "text":"세로로 긴 길을 지나니, 저택에 이런 곳이 있었나 싶을 만큼 넓은 공간이 펼쳐진다." },
                   { "text":"벽면에는 여러 사람들의 사진이 걸려 있다." },
                   { "text":"바닥에는 검붉은 색으로 원이 남아 있다. 원의 한가운데는 짙은 얼룩이 보인다." },
@@ -303,7 +303,7 @@ window.DATA_ACT2 = {
                   { "text":"펼쳐진 페이지는 손등을 마주보며 누운 사람의 그림. 살해 현장의 자세와 닮아 있다." },
                   { "quest":{ "action":"complete", "id":"M2-2", "label":"다락의 흔적을 조사하라" } },
                   { "add":{ "insight":1 } },
-                  { "bg":"corridor_2nd_floor_night" },
+                  { "bg":"corridor_2nd_floor_night", "bgm":"04_Act2_party" },
                   { "text":"비밀 공간을 빠져나와 책장을 원래 자리로 돌려놓는다." },
                   { "text":"다락에서 2층으로 내려오는 좁은 계단. 평소엔 지나치지 않던 길이다." },
                   { "text":"복도 한쪽, 작은 문 하나가 살짝 열려 있다. 안에서 옅은 빛이 새어 나온다." },
@@ -329,7 +329,7 @@ window.DATA_ACT2 = {
     ] },
 
     "lucian_room": { "beats":[
-      { "bg":"lucian_room_night", "bgm":"lucian_room_01" },
+      { "bg":"lucian_room_night" },
       { "text":"단정한 작은 방이다. 검소한 침대, 정리된 책상, 벽에 걸린 액자 하나." },
       { "text":"사진 속에는 두 사람이 있다. 한 명은 분명 루시안이다. 평소보다 어린 얼굴이지만 분명하다." },
       { "text":"다른 한 명은 다락 비밀 공간에서 본 사진 속 청년. 두 사람은 가까이 서서 웃고 있다." },
@@ -346,11 +346,11 @@ window.DATA_ACT2 = {
     ] },
 
     "oli_body": { "beats":[
-      { "bg":"bar_corner_inner_night", "bgm":"horror_01" },
+      { "bg":"bar_corner_inner_night" },
       { "text":"바 코너 안쪽, 평소엔 잘 가지 않는 어둑한 통로." },
       { "text":"무엇인가 어둠 속에 쓰러져 있다. 가까이 다가간다." },
       { "bg":"raw:char_oli_corpse" },
-      { "text":"올리다." },
+      { "text":"올리다.", "bgm":"06_Act2_horror" },
       { "text":"한 손을 앞으로 뻗은 채 쓰러져 있다. 무언가를 붙잡으려던 것처럼, 급하게 무너진 자세다." },
       { "who":"player", "emote":"surprised", "text":"올리 씨…!" },
       { "text":"벽 옆 협탁 위에 와인 잔 두 개. 한 잔은 기울어진 채 흘렀고, 다른 한 잔의 가장자리에는 립스틱 자국이 또렷하다." },
@@ -368,9 +368,9 @@ window.DATA_ACT2 = {
     ] },
 
     "reflect3": { "beats":[
-      { "bg":"parlor_night", "bgm":"horror_reflection" },
+      { "bg":"parlor_night" },
       { "text":"사람들이 흩어진 사이, 잠시 응접실에 혼자 남는다." },
-      { "text":"수사 노트를 펼친다. 손이 약간 떨린다." },
+      { "text":"수사 노트를 펼친다. 손이 약간 떨린다.", "se":"notebook" },
       { "text":"에드먼드 씨의 자세는 복부 위 두 손등이 마주하고, 발끝은 가지런했다. 서재의 그 책, 그림 속 자세와도 똑같다." },
       { "text":"다락 벽을 채운 그 청년들도. …같은 방식이, 오랜 세월 되풀이되어 왔다." },
       { "text":"그리고 올리 씨. 한 손을 앞으로 뻗은 채, 너무 갑작스럽게 무너져 있었다." },
