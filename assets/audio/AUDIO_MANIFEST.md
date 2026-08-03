@@ -56,22 +56,35 @@
 
 ---
 
-## SE (10종 — 원샷)
+## SE (효과음 — 최종 15종)
 
-| 마커 | 쓰이는 곳 |
-|---|---|
-| `clue` | 단서 획득음 (전 ACT 공통, 가장 자주) |
-| `door` | 집무실 문 여는 소리 |
-| `lock` | 자물쇠 찰칵 (다락·서랍) |
-| `quiet` | ACT3 도입 정적(앰비언트 컷) |
-| `clock` | 응접실 괘종시계 째깍 |
-| `clock_strike` | 최종 선택 — 괘종시계 정각 타종 |
-| `footsteps` | 사신 코스튬 다가오는 발걸음 |
-| `car_door` | 엔딩 — 차문 닫히는 소리 |
-| `siren` | 트루 엔딩 — 경찰차 사이렌(먼 곳) |
-| `dawn_wind` | 엔딩 — 새벽 바람 |
+> 사용자 확정 리스트. 아래에 없는 마커는 파일을 만들지 않아도 됨(엔진이 조용히 무시).
 
-> 클릭음은 이미 Web Audio 합성으로 처리 중(파일 불필요).
+### 이미 데이터에 `se` 마커 있음 (파일만 넣으면 배선 끝)
+| 마커 | 쓰이는 곳 | 검색 · 후보 |
+|---|---|---|
+| `clue` | 단서 획득음 (전 ACT 공통, **가장 자주**) | `subtle-notification` / `discovery-chime` (짧고 은은하게) |
+| `lock` | 자물쇠 찰칵 (다락 자물쇠·서랍) | `old-lock-click` |
+| `door` | 집무실 문 삐걱 | `old-door-creak` |
+| `clock` | 응접실 괘종시계 째깍 | `grandfather-clock-ticking` — Grandfather Clock Ticking (Sound-Ideas) |
+| `clock_strike` | 최종 선택 — 정각 타종 | `grandfather-clock-strikes` — Grandfather Clock Strikes 12 (HollywoodEdge) |
+| `footsteps` | 느린 발걸음 (ACT3 마리안 등장) | `slow-footsteps` |
+| `siren` | 트루 엔딩 — 먼 사이렌 | `distant-police-siren` |
+| `dawn_wind` | 엔딩 — 새벽 바람 | `wind-ambience` |
+
+### 신규 마커 (확보 시 배선하며 데이터에 `se` 삽입)
+| 마커 | 쓰이는 곳 | 검색 · 후보 |
+|---|---|---|
+| `notebook` | 수사노트 펼치기/덮기 (사색 전부) | `book-page-flip` |
+| `applause` | ACT1 에드먼드 연설 후 박수 | `crowd-applause` — Crowd Applause Indoor (WistanSound) |
+| `footsteps_door` | ACT1 현관 — 루시안 다가옴(문 열리기 전) | `footsteps-approaching` — Footsteps approach a door… (sounddogs) |
+| `glass` | 유리잔·와인잔 (ACT1 토미 · 베라 와인잔 재사용) | `glass-clink` — Glass Clinks…Down Table (sounddogs) |
+| `body_thud` | ACT1 살인 — 둔탁한 소리 | `heavy-impact` / `body-thud` |
+| `keys` | ACT2 복도 — 열쇠 꾸러미 | `keys-jingle` — Keys Jingling Gently (HollywoodEdge) |
+| `bookshelf` | ACT2 다락 — 책장 밀어 비밀공간 개방 | `secret-passage` — Grinding rumbling stone slides open (sounddogs) |
+
+> 클릭음은 Web Audio 합성(파일 불필요).
+> **미채택(파일 안 만듦 → 자동 무시)**: `quiet`(ACT3 도입 정적)·`car_door`(엔딩 차문).
 
 ---
 
